@@ -1,0 +1,1 @@
+export const SOLCAST_BASE_URL = "https://api.solcast.com.au"
