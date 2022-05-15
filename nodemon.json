@@ -7,6 +7,6 @@
     "watch": [
         "src"
     ],
-    "exec": "npm start",
+    "exec": "tsc && npm start",
     "ext": "ts"
 }

@@ -1,7 +1,10 @@
+import cors from "cors";
 import { Router } from "express";
 import { getWorldRadiationForecast, getWorldRadiationForecastGhi } from "../../../api/solcast";
 
 const router = Router()
+
+router.use(cors())
 
 router.get("/", async (request, response) => {
     const { latitude, longitude, hours } = request.query
