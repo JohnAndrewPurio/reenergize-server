@@ -12,8 +12,16 @@ router.get("/", async (request, response) => {
         });
         return;
     }
-    const data = await (0, solcast_1.getWorldRadiationEstimatedActuals)(latitude, longitude, hours);
-    response.json(data);
+    try {
+        const data = await (0, solcast_1.getWorldRadiationEstimatedActuals)(latitude, longitude, hours);
+        response.json(data);
+    }
+    catch (e) {
+        response.statusCode = 500;
+        //@ts-ignore
+        console.log(e?.message);
+        response.json(e);
+    }
 });
 router.get("/ghi", async (request, response) => {
     const { latitude, longitude, hours } = request.query;
@@ -24,7 +32,15 @@ router.get("/ghi", async (request, response) => {
         });
         return;
     }
-    const data = await (0, solcast_1.getWorldRadiationEstimatedActualsGhi)(latitude, longitude, hours);
-    response.json(data);
+    try {
+        const data = await (0, solcast_1.getWorldRadiationEstimatedActualsGhi)(latitude, longitude, hours);
+        response.json(data);
+    }
+    catch (e) {
+        response.statusCode = 500;
+        //@ts-ignore
+        console.log(e?.message);
+        response.json(e);
+    }
 });
 exports.default = router;

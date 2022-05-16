@@ -7,6 +7,10 @@ const router = Router()
 router.use(cors())
 
 router.get("/", async (request, response) => {
+    const { query } = request
+
+    console.log("Query:", query)
+
     const { latitude, longitude, hours } = request.query
 
     if (!latitude || !longitude) {
@@ -19,13 +23,22 @@ router.get("/", async (request, response) => {
         return
     }
 
-    const data = await getWorldRadiationForecast(
-        latitude as string, 
-        longitude as string, 
-        hours as string | undefined
-    )
+    try {
+        const data = await getWorldRadiationForecast(
+            latitude as string,
+            longitude as string,
+            hours as string | undefined
+        )
 
-    response.json(data)
+        response.json(data)
+    } catch (e) {
+        response.statusCode = 500
+
+        //@ts-ignore
+        console.log(e?.message)
+
+        response.json(e)
+    }
 })
 
 router.get("/ghi", async (request, response) => {
@@ -41,13 +54,22 @@ router.get("/ghi", async (request, response) => {
         return
     }
 
-    const data = await getWorldRadiationForecastGhi(
-        latitude as string, 
-        longitude as string, 
-        hours as string | undefined
-    )
+    try {
+        const data = await getWorldRadiationForecastGhi(
+            latitude as string,
+            longitude as string,
+            hours as string | undefined
+        )
 
-    response.json(data)
+        response.json(data)
+    } catch (e) {
+        response.statusCode = 500
+
+        //@ts-ignore
+        console.log(e?.message)
+
+        response.json(e)
+    }
 })
 
 export default router

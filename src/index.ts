@@ -4,6 +4,7 @@ import express from "express"
 import { getMonthlyAverages } from "./api/solcast";
 
 import worldRadiation from "./routes/world_radiation"
+import worldPvPower from "./routes/world_pv_power"
 
 config()
 
@@ -12,6 +13,7 @@ const app = express();
 
 app.use(cors());
 app.use("/world_radiation", worldRadiation)
+app.use("/world_pv_power", worldPvPower)
 
 app.get("/monthly_averages", async (request, response) => {
     const { latitude, longitude } = request.query

@@ -16,13 +16,22 @@ router.get("/", async (request, response) => {
         return
     }
 
-    const data = await getWorldRadiationEstimatedActuals(
-        latitude as string, 
-        longitude as string, 
-        hours as string | undefined
-    )
+    try {
+        const data = await getWorldRadiationEstimatedActuals(
+            latitude as string,
+            longitude as string,
+            hours as string | undefined
+        )
 
-    response.json(data)
+        response.json(data)
+    } catch (e) {
+        response.statusCode = 500
+
+        //@ts-ignore
+        console.log(e?.message)
+
+        response.json(e)
+    }
 })
 
 router.get("/ghi", async (request, response) => {
@@ -38,13 +47,22 @@ router.get("/ghi", async (request, response) => {
         return
     }
 
-    const data = await getWorldRadiationEstimatedActualsGhi(
-        latitude as string, 
-        longitude as string, 
-        hours as string | undefined
-    )
+    try {
+        const data = await getWorldRadiationEstimatedActualsGhi(
+            latitude as string,
+            longitude as string,
+            hours as string | undefined
+        )
 
-    response.json(data)
+        response.json(data)
+    } catch (e) {
+        response.statusCode = 500
+
+        //@ts-ignore
+        console.log(e?.message)
+
+        response.json(e)
+    }
 })
 
 export default router
