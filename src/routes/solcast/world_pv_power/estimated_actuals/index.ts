@@ -1,6 +1,6 @@
 import cors from "cors";
 import { Router } from "express";
-import { getWorldPvPowerEstimatedActuals, getWorldPvPowerForecasts } from "../../../api/solcast";
+import { getWorldPvPowerEstimatedActuals, getWorldPvPowerForecasts } from "../../../../api/solcast";
 
 const router = Router()
 

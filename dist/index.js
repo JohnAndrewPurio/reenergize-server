@@ -7,14 +7,14 @@ const dotenv_1 = require("dotenv");
 const cors_1 = __importDefault(require("cors"));
 const express_1 = __importDefault(require("express"));
 const solcast_1 = require("./api/solcast");
-const world_radiation_1 = __importDefault(require("./routes/world_radiation"));
-const world_pv_power_1 = __importDefault(require("./routes/world_pv_power"));
+const solcast_2 = __importDefault(require("./routes/solcast"));
+const mapbox_1 = __importDefault(require("./routes/mapbox"));
 (0, dotenv_1.config)();
 const PORT = process.env.PORT || 3000;
 const app = (0, express_1.default)();
 app.use((0, cors_1.default)());
-app.use("/world_radiation", world_radiation_1.default);
-app.use("/world_pv_power", world_pv_power_1.default);
+app.use("/solcast", solcast_2.default);
+app.use("/mapbox", mapbox_1.default);
 app.get("/monthly_averages", async (request, response) => {
     const { latitude, longitude } = request.query;
     if (!latitude || !longitude) {

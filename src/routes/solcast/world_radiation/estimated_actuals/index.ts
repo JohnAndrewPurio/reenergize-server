@@ -1,16 +1,9 @@
-import cors from "cors";
 import { Router } from "express";
-import { getWorldRadiationForecast, getWorldRadiationForecastGhi } from "../../../api/solcast";
+import { getWorldRadiationEstimatedActuals, getWorldRadiationEstimatedActualsGhi, getWorldRadiationForecast, getWorldRadiationForecastGhi } from "../../../../api/solcast";
 
 const router = Router()
 
-router.use(cors())
-
 router.get("/", async (request, response) => {
-    const { query } = request
-
-    console.log("Query:", query)
-
     const { latitude, longitude, hours } = request.query
 
     if (!latitude || !longitude) {
@@ -24,7 +17,7 @@ router.get("/", async (request, response) => {
     }
 
     try {
-        const data = await getWorldRadiationForecast(
+        const data = await getWorldRadiationEstimatedActuals(
             latitude as string,
             longitude as string,
             hours as string | undefined
@@ -55,7 +48,7 @@ router.get("/ghi", async (request, response) => {
     }
 
     try {
-        const data = await getWorldRadiationForecastGhi(
+        const data = await getWorldRadiationEstimatedActualsGhi(
             latitude as string,
             longitude as string,
             hours as string | undefined
