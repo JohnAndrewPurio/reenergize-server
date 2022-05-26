@@ -6,14 +6,23 @@ const router = (0, express_1.Router)();
 router.get("/", async (request, response) => {
     const { query } = request;
     const { location, latitude, longitude } = query;
-    if (!location || (!latitude && !longitude)) {
+    if (!location && (!latitude && !longitude)) {
         response.status(400);
         response.json({
             message: `Missing ${!latitude || !longitude ? "latitude/longitude" : "location"} query parameter`
         });
     }
     try {
-        const data = await (0, mapbox_1.forwardGeocoding)(location);
+        let data;
+        if (location) {
+            delete query["location"];
+            data = await (0, mapbox_1.forwardGeocoding)(location, query);
+        }
+        else {
+            delete query["latitude"];
+            delete query["longitude"];
+            data = await (0, mapbox_1.reverseGeocoding)(latitude, longitude, query);
+        }
         response.json(data);
     }
     catch (e) {
