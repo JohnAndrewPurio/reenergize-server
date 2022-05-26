@@ -13,6 +13,7 @@ const app = express();
 app.use(cors());
 app.use("/solcast", solcast)
 app.use("/mapbox", mapbox)
+app.use(express.static("public"))
 
 app.get("/", (request, response) => {
     response.json("Hello World")

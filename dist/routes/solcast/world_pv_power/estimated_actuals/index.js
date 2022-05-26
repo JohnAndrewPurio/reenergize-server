@@ -10,7 +10,7 @@ const router = (0, express_1.Router)();
 router.use((0, cors_1.default)());
 router.get("/", async (request, response) => {
     const { query } = request;
-    const { latitude, longitude, capacity, tilt, azimuth, install_date, loss_factor, hours } = request.query;
+    const { latitude, longitude, capacity, tilt, azimuth, install_date, loss_factor, hours } = query;
     if (!latitude || !longitude) {
         response.status(400);
         response.json({
