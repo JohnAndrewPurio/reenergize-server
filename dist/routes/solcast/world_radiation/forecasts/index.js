@@ -10,8 +10,7 @@ const router = (0, express_1.Router)();
 router.use((0, cors_1.default)());
 router.get("/", async (request, response) => {
     const { query } = request;
-    console.log("Query:", query);
-    const { latitude, longitude, hours } = request.query;
+    const { latitude, longitude, hours, format } = request.query;
     if (!latitude || !longitude) {
         response.status(400);
         response.json({
@@ -20,7 +19,7 @@ router.get("/", async (request, response) => {
         return;
     }
     try {
-        const data = await (0, solcast_1.getWorldRadiationForecast)(latitude, longitude, hours);
+        const data = await (0, solcast_1.getWorldRadiationForecast)(latitude, longitude, hours, format);
         response.json(data);
     }
     catch (e) {
@@ -31,7 +30,7 @@ router.get("/", async (request, response) => {
     }
 });
 router.get("/ghi", async (request, response) => {
-    const { latitude, longitude, hours } = request.query;
+    const { latitude, longitude, hours, format } = request.query;
     if (!latitude || !longitude) {
         response.status(400);
         response.json({
@@ -40,7 +39,7 @@ router.get("/ghi", async (request, response) => {
         return;
     }
     try {
-        const data = await (0, solcast_1.getWorldRadiationForecastGhi)(latitude, longitude, hours);
+        const data = await (0, solcast_1.getWorldRadiationForecastGhi)(latitude, longitude, hours, format);
         response.json(data);
     }
     catch (e) {

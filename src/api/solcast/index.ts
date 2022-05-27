@@ -5,12 +5,14 @@ import { config } from "dotenv"
 config()
 const api_key = process.env.SOLCAST_API_KEY as string
 
-export const getWorldRadiationForecast = async (latitude: string, longitude: string, hours?: string) => {
+export type ResponseFormat = "csv" | "json" | "xml"
+
+export const getWorldRadiationForecast = async (latitude: string, longitude: string, hours?: string, format: ResponseFormat = "json") => {
     const url = new URL("/world_radiation/forecasts", SOLCAST_BASE_URL)
     const url_search_params = new URLSearchParams({
         latitude,
         longitude,
-        format: "json",
+        format,
         api_key
     })
 
@@ -28,12 +30,12 @@ export const getWorldRadiationForecast = async (latitude: string, longitude: str
     }
 }
 
-export const getWorldRadiationForecastGhi = async (latitude: string, longitude: string, hours?: string) => {
+export const getWorldRadiationForecastGhi = async (latitude: string, longitude: string, hours?: string, format: ResponseFormat = "json") => {
     const url = new URL("/world_radiation/forecasts/ghi", SOLCAST_BASE_URL)
     const url_search_params = new URLSearchParams({
         latitude,
         longitude,
-        format: "json",
+        format,
         api_key
     })
 
@@ -51,12 +53,12 @@ export const getWorldRadiationForecastGhi = async (latitude: string, longitude: 
     }
 }
 
-export const getWorldRadiationEstimatedActuals = async (latitude: string, longitude: string, hours?: string) => {
+export const getWorldRadiationEstimatedActuals = async (latitude: string, longitude: string, hours?: string, format: ResponseFormat = "json") => {
     const url = new URL("/world_radiation/estimated_actuals", SOLCAST_BASE_URL)
     const url_search_params = new URLSearchParams({
         latitude,
         longitude,
-        format: "json",
+        format,
         api_key
     })
 
@@ -74,12 +76,12 @@ export const getWorldRadiationEstimatedActuals = async (latitude: string, longit
     }
 }
 
-export const getWorldRadiationEstimatedActualsGhi = async (latitude: string, longitude: string, hours?: string) => {
+export const getWorldRadiationEstimatedActualsGhi = async (latitude: string, longitude: string, hours?: string, format: ResponseFormat = "json") => {
     const url = new URL("/world_radiation/estimated_actuals/ghi", SOLCAST_BASE_URL)
     const url_search_params = new URLSearchParams({
         latitude,
         longitude,
-        format: "json",
+        format,
         api_key
     })
 
@@ -110,14 +112,14 @@ export const getWorldRadiationEstimatedActualsGhi = async (latitude: string, lon
  * @param hours Time window of the response in hours (default 48, max 168)
  */
 export const getWorldPvPowerForecasts = async (
-    latitude: string, longitude: string, capacity: string, tilt?: string, azimuth?: string, install_date?: string, loss_factor?: string, hours?: string,
+    latitude: string, longitude: string, capacity: string, tilt?: string, azimuth?: string, install_date?: string, loss_factor?: string, hours?: string, format: ResponseFormat = "json"
 ) => {
     const url = new URL("/world_pv_power/forecasts", SOLCAST_BASE_URL)
     const url_search_params = new URLSearchParams({
         latitude: String(latitude),
         longitude: String(longitude),
         capacity: String(capacity),
-        format: "json",
+        format,
         api_key
     })
 
@@ -167,14 +169,15 @@ export const getWorldPvPowerEstimatedActuals = async (
     azimuth?: string,
     install_date?: string,
     loss_factor?: string,
-    hours?: string
+    hours?: string,
+    format: ResponseFormat = "json"
 ) => {
     const url = new URL("/world_pv_power/estimated_actuals", SOLCAST_BASE_URL)
     const url_search_params = new URLSearchParams({
         latitude: String(latitude),
         longitude: String(longitude),
         capacity: String(capacity),
-        format: "json",
+        format,
         api_key
     })
 
@@ -204,12 +207,12 @@ export const getWorldPvPowerEstimatedActuals = async (
     }
 }
 
-export async function getMonthlyAverages(latitude: string, longitude: string) {
+export async function getMonthlyAverages(latitude: string, longitude: string, format: ResponseFormat = "json") {
     const url = new URL("/monthly_averages", SOLCAST_BASE_URL)
     const url_search_params = new URLSearchParams({
         latitude: latitude,
         longitude: longitude,
-        format: "json",
+        format,
         api_key
     })
 

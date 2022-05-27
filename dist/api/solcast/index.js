@@ -9,12 +9,12 @@ const source_1 = require("./source");
 const dotenv_1 = require("dotenv");
 (0, dotenv_1.config)();
 const api_key = process.env.SOLCAST_API_KEY;
-const getWorldRadiationForecast = async (latitude, longitude, hours) => {
+const getWorldRadiationForecast = async (latitude, longitude, hours, format = "json") => {
     const url = new URL("/world_radiation/forecasts", source_1.SOLCAST_BASE_URL);
     const url_search_params = new URLSearchParams({
         latitude,
         longitude,
-        format: "json",
+        format,
         api_key
     });
     if (hours)
@@ -29,12 +29,12 @@ const getWorldRadiationForecast = async (latitude, longitude, hours) => {
     }
 };
 exports.getWorldRadiationForecast = getWorldRadiationForecast;
-const getWorldRadiationForecastGhi = async (latitude, longitude, hours) => {
+const getWorldRadiationForecastGhi = async (latitude, longitude, hours, format = "json") => {
     const url = new URL("/world_radiation/forecasts/ghi", source_1.SOLCAST_BASE_URL);
     const url_search_params = new URLSearchParams({
         latitude,
         longitude,
-        format: "json",
+        format,
         api_key
     });
     if (hours)
@@ -49,12 +49,12 @@ const getWorldRadiationForecastGhi = async (latitude, longitude, hours) => {
     }
 };
 exports.getWorldRadiationForecastGhi = getWorldRadiationForecastGhi;
-const getWorldRadiationEstimatedActuals = async (latitude, longitude, hours) => {
+const getWorldRadiationEstimatedActuals = async (latitude, longitude, hours, format = "json") => {
     const url = new URL("/world_radiation/estimated_actuals", source_1.SOLCAST_BASE_URL);
     const url_search_params = new URLSearchParams({
         latitude,
         longitude,
-        format: "json",
+        format,
         api_key
     });
     if (hours)
@@ -69,12 +69,12 @@ const getWorldRadiationEstimatedActuals = async (latitude, longitude, hours) => 
     }
 };
 exports.getWorldRadiationEstimatedActuals = getWorldRadiationEstimatedActuals;
-const getWorldRadiationEstimatedActualsGhi = async (latitude, longitude, hours) => {
+const getWorldRadiationEstimatedActualsGhi = async (latitude, longitude, hours, format = "json") => {
     const url = new URL("/world_radiation/estimated_actuals/ghi", source_1.SOLCAST_BASE_URL);
     const url_search_params = new URLSearchParams({
         latitude,
         longitude,
-        format: "json",
+        format,
         api_key
     });
     if (hours)
@@ -101,13 +101,13 @@ exports.getWorldRadiationEstimatedActualsGhi = getWorldRadiationEstimatedActuals
  * @param loss_factor A factor by which to reduce your output forecast from the full capacity based on characteristics of the PV array or inverter. This is effectively the non-temperature loss effects on the nameplate rating of the PV system, including inefficiency and soiling. For a 1kW PV system anything that reduces 1000W/m2 solar radiation from producing 1000W of power output (assuming temperature is 25C). Valid values are between 0 and 1 (i.e 0.6 equals 60%). If you specify 0.6 your returned power will be a maximum of 60% of AC capacity.
  * @param hours Time window of the response in hours (default 48, max 168)
  */
-const getWorldPvPowerForecasts = async (latitude, longitude, capacity, tilt, azimuth, install_date, loss_factor, hours) => {
+const getWorldPvPowerForecasts = async (latitude, longitude, capacity, tilt, azimuth, install_date, loss_factor, hours, format = "json") => {
     const url = new URL("/world_pv_power/forecasts", source_1.SOLCAST_BASE_URL);
     const url_search_params = new URLSearchParams({
         latitude: String(latitude),
         longitude: String(longitude),
         capacity: String(capacity),
-        format: "json",
+        format,
         api_key
     });
     if (tilt)
@@ -142,13 +142,13 @@ exports.getWorldPvPowerForecasts = getWorldPvPowerForecasts;
  * @param loss_factor A factor by which to reduce your output forecast from the full capacity based on characteristics of the PV array or inverter. This is effectively the non-temperature loss effects on the nameplate rating of the PV system, including inefficiency and soiling. For a 1kW PV system anything that reduces 1000W/m2 solar radiation from producing 1000W of power output (assuming temperature is 25C). Valid values are between 0 and 1 (i.e 0.6 equals 60%). If you specify 0.6 your returned power will be a maximum of 60% of AC capacity.
  * @param hours Time window of the response in hours (default 48, max 168)
  */
-const getWorldPvPowerEstimatedActuals = async (latitude, longitude, capacity, tilt, azimuth, install_date, loss_factor, hours) => {
+const getWorldPvPowerEstimatedActuals = async (latitude, longitude, capacity, tilt, azimuth, install_date, loss_factor, hours, format = "json") => {
     const url = new URL("/world_pv_power/estimated_actuals", source_1.SOLCAST_BASE_URL);
     const url_search_params = new URLSearchParams({
         latitude: String(latitude),
         longitude: String(longitude),
         capacity: String(capacity),
-        format: "json",
+        format,
         api_key
     });
     if (tilt)
@@ -171,12 +171,12 @@ const getWorldPvPowerEstimatedActuals = async (latitude, longitude, capacity, ti
     }
 };
 exports.getWorldPvPowerEstimatedActuals = getWorldPvPowerEstimatedActuals;
-async function getMonthlyAverages(latitude, longitude) {
+async function getMonthlyAverages(latitude, longitude, format = "json") {
     const url = new URL("/monthly_averages", source_1.SOLCAST_BASE_URL);
     const url_search_params = new URLSearchParams({
         latitude: latitude,
         longitude: longitude,
-        format: "json",
+        format,
         api_key
     });
     url.search = url_search_params.toString();

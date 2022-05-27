@@ -4,7 +4,7 @@ const express_1 = require("express");
 const solcast_1 = require("../../../../api/solcast");
 const router = (0, express_1.Router)();
 router.get("/", async (request, response) => {
-    const { latitude, longitude, hours } = request.query;
+    const { latitude, longitude, hours, format } = request.query;
     if (!latitude || !longitude) {
         response.status(400);
         response.json({
@@ -13,7 +13,7 @@ router.get("/", async (request, response) => {
         return;
     }
     try {
-        const data = await (0, solcast_1.getWorldRadiationEstimatedActuals)(latitude, longitude, hours);
+        const data = await (0, solcast_1.getWorldRadiationEstimatedActuals)(latitude, longitude, hours, format);
         response.json(data);
     }
     catch (e) {
@@ -24,7 +24,7 @@ router.get("/", async (request, response) => {
     }
 });
 router.get("/ghi", async (request, response) => {
-    const { latitude, longitude, hours } = request.query;
+    const { latitude, longitude, hours, format } = request.query;
     if (!latitude || !longitude) {
         response.status(400);
         response.json({
@@ -33,7 +33,7 @@ router.get("/ghi", async (request, response) => {
         return;
     }
     try {
-        const data = await (0, solcast_1.getWorldRadiationEstimatedActualsGhi)(latitude, longitude, hours);
+        const data = await (0, solcast_1.getWorldRadiationEstimatedActualsGhi)(latitude, longitude, hours, format);
         response.json(data);
     }
     catch (e) {

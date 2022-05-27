@@ -1,10 +1,10 @@
 import { Router } from "express";
-import { getWorldRadiationEstimatedActuals, getWorldRadiationEstimatedActualsGhi, getWorldRadiationForecast, getWorldRadiationForecastGhi } from "../../../../api/solcast";
+import { getWorldRadiationEstimatedActuals, getWorldRadiationEstimatedActualsGhi, getWorldRadiationForecast, getWorldRadiationForecastGhi, ResponseFormat } from "../../../../api/solcast";
 
 const router = Router()
 
 router.get("/", async (request, response) => {
-    const { latitude, longitude, hours } = request.query
+    const { latitude, longitude, hours, format } = request.query
 
     if (!latitude || !longitude) {
         response.status(400)
@@ -20,7 +20,8 @@ router.get("/", async (request, response) => {
         const data = await getWorldRadiationEstimatedActuals(
             latitude as string,
             longitude as string,
-            hours as string | undefined
+            hours as string | undefined,
+            format as (ResponseFormat | undefined)
         )
 
         response.json(data)
@@ -35,7 +36,7 @@ router.get("/", async (request, response) => {
 })
 
 router.get("/ghi", async (request, response) => {
-    const { latitude, longitude, hours } = request.query
+    const { latitude, longitude, hours, format } = request.query
 
     if (!latitude || !longitude) {
         response.status(400)
@@ -51,7 +52,8 @@ router.get("/ghi", async (request, response) => {
         const data = await getWorldRadiationEstimatedActualsGhi(
             latitude as string,
             longitude as string,
-            hours as string | undefined
+            hours as string | undefined,
+            format as (ResponseFormat | undefined)
         )
 
         response.json(data)
