@@ -5,7 +5,7 @@ const router = Router()
 
 router.get("/", async (request, response) => {
     const { query } = request
-    const { lat, lon } = query
+    const { lat, lon, mode, units } = query
 
     if(!lat || !lon) {
         response.json({
@@ -14,7 +14,12 @@ router.get("/", async (request, response) => {
     }
 
     try {
-        const data = await getCurrentWeather(lat as string, lon as string)
+        const data = await getCurrentWeather(lat as string, lon as string, {
+            // @ts-ignore
+            mode: mode as string, 
+            // @ts-ignore
+            units: units as string
+        })
 
         response.json(data)
     } catch (e) {
